@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mise en relation – O3C Conseil</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1B2A45;
+      --gold:   #B8944A;
+      --cream:  #F7F5F1;
+      --border: #D6D0C4;
+      --text:   #2C2C2C;
+      --muted:  #6B6760;
+      --error:  #C0392B;
+      --radius: 6px;
+      --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
+
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────────────────── */
+    header {
+      background: var(--navy);
+      padding: 32px 24px 28px;
+      text-align: center;
+    }
+    header .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: clamp(20px, 4vw, 26px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+    header p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.72);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ── Main wrapper ────────────────────────────────── */
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── Section labels ──────────────────────────────── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Form blocks ─────────────────────────────────── */
+    .block {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 20px 18px;
+      margin-bottom: 16px;
+    }
+    .block + .section-label { margin-top: 28px; }
+
+    .contact-block {
+      border-left: 3px solid var(--gold);
+    }
+    .contact-block .contact-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Row layout ──────────────────────────────────── */
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 520px) {
+      .row { grid-template-columns: 1fr; }
+    }
+
+    /* ── Fields ──────────────────────────────────────── */
+    .field { display: flex; flex-direction: column; gap: 5px; }
+
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      font-size: 15px;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.15s;
+      /* Anti-zoom iOS : 16px minimum */
+      -webkit-text-size-adjust: 100%;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    textarea:focus {
+      border-color: var(--navy);
+      background: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 72px;
+    }
+
+    /* ── Error message ───────────────────────────────── */
+    .error-msg {
+      display: none;
+      color: var(--error);
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 4px;
+      padding: 8px 12px;
+      background: #fdf3f2;
+      border: 1px solid #f0c8c4;
+      border-radius: var(--radius);
+    }
+    .error-msg.visible { display: block; }
+
+    /* ── Submit ──────────────────────────────────────── */
+    .submit-area {
+      margin-top: 28px;
+      text-align: center;
+    }
+    button[type="submit"] {
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: 14px 36px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 0.15s;
+      width: 100%;
+      max-width: 320px;
+    }
+    button[type="submit"]:hover { background: #243659; }
+    button[type="submit"]:active { background: #111d30; }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 0 20px 40px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    footer strong { color: var(--navy); }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── Divider ─────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">O3C Conseil</div>
+  <h1>Vous connaissez quelqu'un qui pourrait en bénéficier ?</h1>
+  <p>Payer moins d'impôts, préparer sa retraite, sécuriser sa famille ou simplement faire mieux que le Livret A — partagez ses coordonnées, je prends contact.</p>
+</header>
+
+<main>
+  <form id="referralForm" novalidate>
+
+    <!-- Expéditeur -->
+    <div class="section-label">Vous</div>
+    <div class="block">
+      <div class="row">
+        <div class="field">
+          <label for="sender-lastname">Nom *</label>
+          <input type="text" id="sender-lastname" name="sender-lastname" placeholder="Dupont" autocomplete="family-name" required>
+        </div>
+        <div class="field">
+          <label for="sender-firstname">Prénom *</label>
+          <input type="text" id="sender-firstname" name="sender-firstname" placeholder="Marie" autocomplete="given-name" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mise en relation 1 -->
+    <div class="section-label" style="margin-top:28px">Personne(s) à qui je pourrais être utile</div>
+
+    <div class="block contact-block" id="contact-1">
+      <div class="contact-title">Contact 1</div>
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label for="c1-lastname">Nom</label>
+          <input type="text" id="c1-lastname" name="c1-lastname" placeholder="Martin">
+        </div>
+        <div class="field">
+          <label for="c1-firstname">Prénom</label>
+          <input type="text" id="c1-firstname" name="c1-firstname" placeholder="Julien">
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label for="c1-email">E-mail</label>
+          <input type="email" id="c1-email" name="c1-email" placeholder="julien.martin@email.com" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="c1-phone">Téléphone</label>
+          <input type="tel" id="c1-phone" name="c1-phone" placeholder="06 XX XX XX XX" autocomplete="off">
+        </div>
+      </div>
+      <div class="field">
+        <label for="c1-note">Précision (optionnel)</label>
+        <textarea id="c1-note" name="c1-note" placeholder="Ex. : il part en retraite dans 2 ans, veut optimiser son épargne…"></textarea>
+      </div>
+      <div class="error-msg" id="err-1">Merci d'indiquer au moins un moyen de contact (e-mail ou téléphone) pour ce contact.</div>
+    </div>
+
+    <!-- Mise en relation 2 -->
+    <div class="block contact-block" id="contact-2" style="margin-top:12px">
+      <div class="contact-title">Contact 2 <span style="font-weight:400;color:var(--muted)">(optionnel)</span></div>
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label for="c2-lastname">Nom</label>
+          <input type="text" id="c2-lastname" name="c2-lastname" placeholder="Bernard">
+        </div>
+        <div class="field">
+          <label for="c2-firstname">Prénom</label>
+          <input type="text" id="c2-firstname" name="c2-firstname" placeholder="Sophie">
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label for="c2-email">E-mail</label>
+          <input type="email" id="c2-email" name="c2-email" placeholder="sophie.bernard@email.com" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="c2-phone">Téléphone</label>
+          <input type="tel" id="c2-phone" name="c2-phone" placeholder="06 XX XX XX XX" autocomplete="off">
+        </div>
+      </div>
+      <div class="field">
+        <label for="c2-note">Précision (optionnel)</label>
+        <textarea id="c2-note" name="c2-note" placeholder="Ex. : jeune couple, premier achat immobilier prévu…"></textarea>
+      </div>
+      <div class="error-msg" id="err-2">Merci d'indiquer au moins un moyen de contact (e-mail ou téléphone) pour ce contact.</div>
+    </div>
+
+    <!-- Mise en relation 3 -->
+    <div class="block contact-block" id="contact-3" style="margin-top:12px">
+      <div class="contact-title">Contact 3 <span style="font-weight:400;color:var(--muted)">(optionnel)</span></div>
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label for="c3-lastname">Nom</label>
+          <input type="text" id="c3-lastname" name="c3-lastname" placeholder="Lefebvre">
+        </div>
+        <div class="field">
+          <label for="c3-firstname">Prénom</label>
+          <input type="text" id="c3-firstname" name="c3-firstname" placeholder="Thomas">
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label for="c3-email">E-mail</label>
+          <input type="email" id="c3-email" name="c3-email" placeholder="thomas.lefebvre@email.com" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="c3-phone">Téléphone</label>
+          <input type="tel" id="c3-phone" name="c3-phone" placeholder="06 XX XX XX XX" autocomplete="off">
+        </div>
+      </div>
+      <div class="field">
+        <label for="c3-note">Précision (optionnel)</label>
+        <textarea id="c3-note" name="c3-note" placeholder="Ex. : profession libérale, cherche à réduire sa fiscalité…"></textarea>
+      </div>
+      <div class="error-msg" id="err-3">Merci d'indiquer au moins un moyen de contact (e-mail ou téléphone) pour ce contact.</div>
+    </div>
+
+    <div class="submit-area">
+      <button type="submit">Envoyer ma mise en relation</button>
+    </div>
+
+  </form>
+</main>
+
+<div class="divider" style="max-width:680px;margin:0 auto"></div>
+
+<footer>
+  <strong>CABESTRERO Odile – O3C Conseil</strong><br>
+  200 rue Louis XV – 59830 Cysoing<br>
+  <a href="tel:0623496916">06 23 49 69 16</a> · <a href="mailto:odilecabestrero.pro@icloud.com">odilecabestrero.pro@icloud.com</a><br><br>
+  <span style="font-size:11px;color:#9a9690">Les informations transmises via ce formulaire sont destinées exclusivement à O3C Conseil dans le cadre d'une prise de contact. Conformément au RGPD, les personnes concernées peuvent exercer leurs droits en écrivant à l'adresse ci-dessus.</span>
+</footer>
+
+<script>
+  document.getElementById('referralForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // ── Retrieve sender ──────────────────────────
+    const senderLast  = document.getElementById('sender-lastname').value.trim();
+    const senderFirst = document.getElementById('sender-firstname').value.trim();
+
+    if (!senderLast || !senderFirst) {
+      document.getElementById('sender-lastname').focus();
+      return;
+    }
+
+    // ── Contacts data ────────────────────────────
+    const contacts = [1, 2, 3].map(i => ({
+      lastname:  document.getElementById(`c${i}-lastname`).value.trim(),
+      firstname: document.getElementById(`c${i}-firstname`).value.trim(),
+      email:     document.getElementById(`c${i}-email`).value.trim(),
+      phone:     document.getElementById(`c${i}-phone`).value.trim(),
+      note:      document.getElementById(`c${i}-note`).value.trim(),
+    }));
+
+    // ── Validators ───────────────────────────────
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const phoneRe = /^(\+33|0033|0)[1-9]([ .\-]?\d{2}){4}$/;
+
+    // ── Validation ───────────────────────────────
+    let hasAtLeastOne = false;
+    let valid = true;
+
+    contacts.forEach((c, idx) => {
+      const errEl = document.getElementById(`err-${idx + 1}`);
+      errEl.classList.remove('visible');
+
+      const hasSomething = c.lastname || c.firstname || c.email || c.phone || c.note;
+      if (!hasSomething) return;
+
+      hasAtLeastOne = true;
+      const errors = [];
+
+      if (!c.email && !c.phone) {
+        errors.push("Indiquez au moins un moyen de contact (e-mail ou téléphone).");
+      } else {
+        if (c.email && !emailRe.test(c.email))
+          errors.push("L'adresse e-mail ne semble pas valide.");
+        if (c.phone && !phoneRe.test(c.phone))
+          errors.push("Le numéro de téléphone doit être un numéro français valide (ex. : 06 12 34 56 78).");
+      }
+
+      if (errors.length) {
+        errEl.textContent = errors.join(' ');
+        errEl.classList.add('visible');
+        valid = false;
+      }
+    });
+
+    if (!hasAtLeastOne) {
+      document.getElementById('err-1').textContent = 'Veuillez renseigner au moins un contact avant d\'envoyer.';
+      document.getElementById('err-1').classList.add('visible');
+      return;
+    }
+
+    if (!valid) return;
+
+    // ── Build mailto body ────────────────────────
+    const nl  = '%0D%0A';
+    const sep = '-----------------------------';
+
+    let body = `De la part de : ${senderFirst} ${senderLast}${nl}${nl}`;
+
+    contacts.forEach((c, idx) => {
+      const hasSomething = c.lastname || c.firstname || c.email || c.phone || c.note;
+      if (!hasSomething) return;
+
+      body += `${sep}${nl}`;
+      body += `CONTACT ${idx + 1}${nl}`;
+      if (c.lastname || c.firstname) body += `Nom / Prénom : ${c.firstname} ${c.lastname}${nl}`;
+      if (c.email)  body += `E-mail       : ${c.email}${nl}`;
+      if (c.phone)  body += `Téléphone    : ${c.phone}${nl}`;
+      if (c.note)   body += `Précision    : ${c.note}${nl}`;
+      body += nl;
+    });
+
+    body += `${sep}${nl}`;
+    body += `Message envoyé depuis le formulaire de mise en relation O3C Conseil.`;
+
+    const subject = encodeURIComponent(`Mise en relation – ${senderFirst} ${senderLast}`);
+    const mailto  = `mailto:odilecabestrero.pro@icloud.com?subject=${subject}&body=${body}`;
+
+    window.location.href = mailto;
+  });
+</script>
+
+</body>
+</html>
